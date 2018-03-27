@@ -3,7 +3,7 @@
 #
 Name     : mozjs52
 Version  : 52
-Release  : 10
+Release  : 11
 Source0  : https://hg.mozilla.org/mozilla-unified/archive/c3e447e07077.tar.gz
 Group    : Development/Tools
 License  : Apache-2.0 BSD-2-Clause BSD-3-Clause BSD-3-Clause-Clear GPL-2.0 LGPL-2.0 LGPL-2.1 MIT MPL-2.0-no-copyleft-exception
@@ -123,6 +123,8 @@ pushd js/src
 %make_install
 popd
 rm %{buildroot}/usr/lib64/*.ajs
+mv %{buildroot}/usr/lib64/libmozjs-52.so %{buildroot}/usr/lib64/libmozjs-52.so.0
+ln -s libmozjs-52.so %{buildroot}/usr/lib64/libmozjs-52.so.0
 #find %{buildroot}/usr/{lib/pkgconfig,include} -type f -exec chmod -c a-x {} +
 ## make_install_append content
 #mv %{buildroot}/usr/lib64/pkgconfig/js.pc %{buildroot}/usr/lib64/pkgconfig/mozjs-52.pc
@@ -470,3 +472,5 @@ rm %{buildroot}/usr/lib64/*.ajs
 %files lib
 %defattr(-,root,root,-)
 /usr/lib64/libmozjs-52.so
+/usr/lib64/libmozjs-52.so.0
+
