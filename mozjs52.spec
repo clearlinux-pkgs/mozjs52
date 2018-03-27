@@ -123,8 +123,7 @@ pushd js/src
 %make_install
 popd
 rm %{buildroot}/usr/lib64/*.ajs
-mv %{buildroot}/usr/lib64/libmozjs-52.so %{buildroot}/usr/lib64/libmozjs-52.so.0
-ln -s libmozjs-52.so %{buildroot}/usr/lib64/libmozjs-52.so.0
+cp %{buildroot}/usr/lib64/libmozjs-52.so %{buildroot}/usr/lib64/libmozjs-52.so.0
 #find %{buildroot}/usr/{lib/pkgconfig,include} -type f -exec chmod -c a-x {} +
 ## make_install_append content
 #mv %{buildroot}/usr/lib64/pkgconfig/js.pc %{buildroot}/usr/lib64/pkgconfig/mozjs-52.pc
