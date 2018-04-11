@@ -3,7 +3,7 @@
 #
 Name     : mozjs52
 Version  : 52
-Release  : 13
+Release  : 14
 Source0  : https://hg.mozilla.org/mozilla-unified/archive/c3e447e07077.tar.gz
 Group    : Development/Tools
 License  : Apache-2.0 BSD-2-Clause BSD-3-Clause BSD-3-Clause-Clear GPL-2.0 LGPL-2.0 LGPL-2.1 MIT MPL-2.0-no-copyleft-exception
@@ -79,6 +79,10 @@ lib components for the mozjs52 package.
 %patch4 -p1
 #%patch5 -p1
 
+pushd ..
+cp -a  mozilla-unified-c3e447e07077 build-avx2
+popd
+
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
@@ -116,14 +120,54 @@ pushd js/src
 make V=1  %{?_smp_mflags}
 popd
 
+pushd ../build-avx2/js/src
+export CFLAGS="-O3 -falign-functions=32 -fno-semantic-interposition -march=haswell"
+export FCFLAGS="-O3 -falign-functions=32 -fno-semantic-interposition "
+export FFLAGS="$CFLAGS -O3 -falign-functions=32 -fno-semantic-interposition "
+export CXXFLAGS="-O3 -falign-functions=32 -fno-semantic-interposition -march=haswell"
+export AUTOCONF="/usr/bin/autoconf213"
+CFLAGS+=' -fno-delete-null-pointer-checks -fno-strict-aliasing -fno-tree-vrp -flto=10'
+CXXFLAGS+=' -fno-delete-null-pointer-checks -fno-strict-aliasing -fno-tree-vrp -flto=10'
+export CC=gcc CXX=g++ PYTHON=/usr/bin/python2
+
+%configure --disable-static --with-x \
+    --prefix=/usr \
+    --disable-debug \
+    --disable-debug-symbols \
+    --disable-strip \
+    --enable-gold \
+    --enable-optimize="-O3" \
+    --enable-pie \
+    --enable-posix-nspr-emulation \
+    --enable-readline \
+    --enable-release \
+    --enable-shared-js \
+    --enable-tests \
+    --with-intl-api \
+    --with-system-zlib \
+    --program-suffix=52 \
+    --libdir=/usr/lib64/haswell \
+    --without-system-icu
+make V=1  %{?_smp_mflags}
+
+popd
+
+
 %install
 export SOURCE_DATE_EPOCH=1501084420
 rm -rf %{buildroot}
+pushd ../build-avx2/js/src
+%make_install
+popd
+rm -rf %{buildroot}/usr/bin/*
 pushd js/src
 %make_install
 popd
 rm %{buildroot}/usr/lib64/*.ajs
+rm %{buildroot}/usr/lib64/haswell/libjs_static.ajs
+
 cp %{buildroot}/usr/lib64/libmozjs-52.so %{buildroot}/usr/lib64/libmozjs-52.so.0
+cp %{buildroot}/usr/lib64/haswell/libmozjs-52.so %{buildroot}/usr/lib64/haswell/libmozjs-52.so.0
 #find %{buildroot}/usr/{lib/pkgconfig,include} -type f -exec chmod -c a-x {} +
 ## make_install_append content
 #mv %{buildroot}/usr/lib64/pkgconfig/js.pc %{buildroot}/usr/lib64/pkgconfig/mozjs-52.pc
@@ -472,4 +516,6 @@ cp %{buildroot}/usr/lib64/libmozjs-52.so %{buildroot}/usr/lib64/libmozjs-52.so.0
 %defattr(-,root,root,-)
 /usr/lib64/libmozjs-52.so
 /usr/lib64/libmozjs-52.so.0
+/usr/lib64/haswell/libmozjs-52.so
+/usr/lib64/haswell/libmozjs-52.so.0
 
