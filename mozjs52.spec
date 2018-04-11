@@ -3,7 +3,7 @@
 #
 Name     : mozjs52
 Version  : 52
-Release  : 14
+Release  : 15
 Source0  : https://hg.mozilla.org/mozilla-unified/archive/c3e447e07077.tar.gz
 Group    : Development/Tools
 License  : Apache-2.0 BSD-2-Clause BSD-3-Clause BSD-3-Clause-Clear GPL-2.0 LGPL-2.0 LGPL-2.1 MIT MPL-2.0-no-copyleft-exception
@@ -89,10 +89,10 @@ export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
 export SOURCE_DATE_EPOCH=1501084420
-export CFLAGS="-O3 -falign-functions=32 -fno-semantic-interposition "
+export CFLAGS="-O3 -falign-functions=32 -fno-semantic-interposition -fassociative-math -fno-signed-zeros "
 export FCFLAGS="-O3 -falign-functions=32 -fno-semantic-interposition "
 export FFLAGS="$CFLAGS -O3 -falign-functions=32 -fno-semantic-interposition "
-export CXXFLAGS="-O3 -falign-functions=32 -fno-semantic-interposition "
+export CXXFLAGS="-O3 -falign-functions=32 -fno-semantic-interposition -fassociative-math -fno-signed-zeros"
 export AUTOCONF="/usr/bin/autoconf213"
 CFLAGS+=' -fno-delete-null-pointer-checks -fno-strict-aliasing -fno-tree-vrp -flto=10'
 CXXFLAGS+=' -fno-delete-null-pointer-checks -fno-strict-aliasing -fno-tree-vrp -flto=10'
