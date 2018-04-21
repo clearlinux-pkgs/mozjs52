@@ -3,7 +3,7 @@
 #
 Name     : mozjs52
 Version  : 52
-Release  : 15
+Release  : 16
 Source0  : https://hg.mozilla.org/mozilla-unified/archive/c3e447e07077.tar.gz
 Group    : Development/Tools
 License  : Apache-2.0 BSD-2-Clause BSD-3-Clause BSD-3-Clause-Clear GPL-2.0 LGPL-2.0 LGPL-2.1 MIT MPL-2.0-no-copyleft-exception
@@ -37,6 +37,7 @@ Patch2: mozjs52-disable-mozglue.patch
 Patch3: mozjs52-fix-soname.patch
 Patch4: mozjs52-include-configure-script.patch
 Patch5: autoconf.patch
+Patch6: trim.patch
 
 %description
 your system under test with mock objects and make assertions about how they
@@ -78,6 +79,7 @@ lib components for the mozjs52 package.
 %patch3 -p1
 %patch4 -p1
 #%patch5 -p1
+%patch6 -p1
 
 pushd ..
 cp -a  mozilla-unified-c3e447e07077 build-avx2
