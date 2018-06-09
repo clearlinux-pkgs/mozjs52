@@ -3,18 +3,15 @@
 #
 Name     : mozjs52
 Version  : 52
-Release  : 18
+Release  : 19
 Source0  : https://hg.mozilla.org/mozilla-unified/archive/c3e447e07077.tar.gz
 Group    : Development/Tools
 License  : Apache-2.0 BSD-2-Clause BSD-3-Clause BSD-3-Clause-Clear GPL-2.0 LGPL-2.0 LGPL-2.1 MIT MPL-2.0-no-copyleft-exception
 Requires: mozjs52-bin
 Requires: mozjs52-lib
 Requires: psutil
-Requires: py
 Requires: pyOpenSSL
 Requires: pyasn1
-Requires: pytest
-Requires: pytest-cov
 Requires: wheel
 BuildRequires : icu4c-dev
 BuildRequires : nspr-dev
